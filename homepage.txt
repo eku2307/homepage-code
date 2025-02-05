@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekarna Das - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient-light: linear-gradient(135deg, #ffd5cd, #fff0f5, #e6f3ff);
+            --bg-gradient-dark: linear-gradient(135deg, #1a1a2e, #16213e, #1a1a2e);
+            --text-primary-light: #ff6b6b;
+            --text-primary-dark: #ff9999;
+            --bg-nav-light: rgba(255, 255, 255, 0.9);
+            --bg-nav-dark: rgba(26, 26, 46, 0.9);
+            --button-bg-light: #fff;
+            --button-bg-dark: #2a2a4a;
+            --button-text-light: #ff6b6b;
+            --button-text-dark: #ff9999;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: var(--bg-gradient-dark);
+            --text-primary: var(--text-primary-dark);
+            --bg-nav: var(--bg-nav-dark);
+            --button-bg: var(--button-bg-dark);
+            --button-text: var(--button-text-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: var(--bg-gradient-light);
+            --text-primary: var(--text-primary-light);
+            --bg-nav: var(--bg-nav-light);
+            --button-bg: var(--button-bg-light);
+            --button-text: var(--button-text-light);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background 0.3s ease;
+        }
+
+        .mouse-gradient {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.3) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            transition: background 0.3s ease;
+        }
+
+        [data-theme="dark"] .mouse-gradient {
+            background: radial-gradient(circle, rgba(255, 153, 153, 0.35) 0%, transparent 70%);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 40px;
+            z-index: 1001;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            padding: 10px;
+            border-radius: 50%;
+            background: var(--button-bg);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .animated-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 107, 107, 0.15);
+            animation: floatShape 20s linear infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 10%;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 70%;
+            left: 80%;
+            border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+            animation-delay: -5s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 40%;
+            left: 60%;
+            border-radius: 35% 65% 31% 69% / 57% 59% 41% 43%;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatShape {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, 30px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-20px, 50px) rotate(240deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        nav {
+            background-color: var(--bg-nav);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding-right: 2rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transform-style: preserve-3d;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px) scale(1.05) translateZ(20px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-color: var(--text-primary);
+            color: var(--button-bg);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            margin-left: 10%;
+            margin-top: 15vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        .greeting {
+            text-align: left;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        .main-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--text-primary);
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.5s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wave {
+            font-size: 3.2rem;
+            animation: wave 2s infinite;
+            display: inline-block;
+            transform-origin: 70% 70%;
+        }
+
+        .name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 7.5rem;
+            background: linear-gradient(45deg, var(--text-primary), #ffd93d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 1rem 0;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 1s;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .name:hover {
+            transform: translateZ(50px);
+        }
+
+        .tagline {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 1.5s;
+        }
+
+        .typed-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            min-height: 2em;
+            margin-top: 1rem;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(20deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(20deg); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .name {
+                font-size: 4rem;
+            }
+
+            .main-text {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.8rem;
+            }
+
+            .main-content {
+                margin-left: 5%;
+                margin-top: 20vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mouse-gradient"></div>
+    
+    <div class="animated-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <button class="theme-toggle" aria-label="Toggle theme">
+        🌓
+    </button>
+
+    <nav>
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="location.href='about.html'">About Me</button>
+            <button class="nav-button" onclick="location.href='projects.html'">Projects</button>
+            <button class="nav-button" onclick="location.href='skills.html'">Skills</button>
+            <button class="nav-button" onclick="location.href='contact.html'">Contact Me</button>
+        </div>
+    </nav>
+    
+    <div class="main-content">
+        <div class="greeting">
+            <div class="main-text">Heya <span class="wave">👋</span></div>
+            <div class="name">It's Ekarna</div>
+            <div class="tagline">Let's connect!</div>
+            <div class="typed-text"></div>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+        });
+
+        // Mouse gradient follow effect
+        const mouseGradient = document.querySelector('.mouse-gradient');
+        document.addEventListener('mousemove', (e) => {
+            mouseGradient.style.left = e.clientX + 'px';
+            mouseGradient.style.top = e.clientY + 'px';
+        });
+
+        // Typing effect
+        const typedTextElement = document.querySelector('.typed-text');
+        const phrases = [
+            "Frontend Developer",
+            "UI/UX Enthusiast",
+            "Tech Explorer"
+        ];
+        
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let isPaused = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typedTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isPaused = true;
+                isDeleting = true;
+                typeSpeed = 2000;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        setTimeout(type, 2000);
+
+        // Add tilt effect to buttons and name
+        const tiltElements = document.querySelectorAll('.nav-button, .name');
+        
+        tiltElements.forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+                const rect = element.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                
+                const dx = x - xc;
+                const dy = y - yc;
+                
+                const tiltX = -(dy / yc) * 10;
+                const tiltY = (dx / xc) * 10;
+                
+                element.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(20px)`;
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+            });
+        });
+    </script>
+</body>
+</html>
